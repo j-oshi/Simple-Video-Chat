@@ -1,20 +1,20 @@
 const socket = io('/');
 let videoGrid = document.getElementById('video-grid');
+let roomVideo = document.createElement('video');
+roomVideo.muted =true;
+
 const peer = new Peer(undefined, {
     host: '/',
     port: 4002,
 }); 
-
 const peers = {};
-
-let roomVideo = document.createElement('video');
-roomVideo.muted =true;
 
 // Prefer camera resolution nearest to 1280x720.
 let constraints = { audio: true, video: { width: 1280, height: 720 } };
 
 navigator.mediaDevices.getUserMedia(constraints)
 .then(mediaStream => {
+    console.log(mediaStream);
     addVideoStream(mediaStream, roomVideo);
 
     peer.on('call', call => {
@@ -35,6 +35,7 @@ navigator.mediaDevices.getUserMedia(constraints)
 peer.on('open', id => {
     socket.emit("join-room", ROOM_ID, id);
 });
+
 // socket.emit("join-room", ROOM_ID, 302);
 socket.on('user-connected', userId => {
     console.log('user is connect: ' + userId);

@@ -8,7 +8,7 @@ router.get("/", (req, res) => {
 });
 
 router.get("/:room", (req, res) => {
-    res.render('room', { roomId: req.params.room });
+    res.render('pages/room', { roomId: req.params.room });
 });
 
 module.exports = router;
