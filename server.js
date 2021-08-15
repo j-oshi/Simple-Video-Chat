@@ -1,20 +1,19 @@
 const express = require('express');
 const http = require("http");
+const path = require('path');
 const socketIo = require("socket.io");
 
-const port = process.env.PORT || 4001;
 const index = require("./routes/index");
-
+const port = process.env.PORT || 4001;
 const app = express();
-app.use(index);
 
-
-app.use(express.static(__dirname +'/public'));
-// app.use(express.static('public'));
-
-// set the view engine to ejs
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+// setup public folder
+app.use(express.static('./public'));
+app.use(index);
 
 const server = http.createServer(app);
 const io = socketIo(server);
