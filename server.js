@@ -18,15 +18,7 @@ app.use(index);
 const server = http.createServer(app);
 const io = socketIo(server);
 
-io.on('connection', socket => {
-    // Query database
-    // if (interval) {
-    //   clearInterval(interval);
-    // }
-    // interval = setInterval(() => getApiAndEmit(socket), 1000);
-  
-    // console.log(socket.id + ' is connected');
-  
+io.on('connection', socket => { 
     socket.on('join-room', (roomId, userId) => {
         console.log(roomId, userId);
         socket.join(roomId);
@@ -42,21 +34,6 @@ io.on('connection', socket => {
     //   database_insert(data.id, data.name, data.task);
     //   console.log('User with session id of ' + socket.id + ' added todo with id of  ' + data.id  + ' to the list.');
     });
-  
-    // socket.on('remove todo', (id) => {
-    //   database_delete(id);
-    //   console.log(socket.id + ' removed todo with an id of ' + id + ' from the list.');
-    // });
-  
-    // socket.on('update todo', (data) => {
-    //   database_update(data.id, data.name, data.task);
-    //   console.log(socket.id + ' updated todo with the id of ' + data.id);
-    // });
-  
-    // socket.on('disconnect', () => {
-    //   console.log('user disconnected');
-    //   clearInterval(interval);
-    // });
-  });
+});
 
 server.listen(port, () => console.log(`Listening on port ${port}`));
